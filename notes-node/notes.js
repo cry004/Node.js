@@ -59,8 +59,3 @@ module.exports = {
   removeNote,
   logNote
 }
-
-// module.exports.addNote = () => {
-//   console.log('addNote');
-//   return 'New note';
-// }
