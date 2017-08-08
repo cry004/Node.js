@@ -1,0 +1,12 @@
+
+notes-node/notes-data.json
+
+weather-app/node_modules/
+notes-node/node_modules
+bundle.js
+npm-debug.log
+.DS_Store
+
+# IntelliJ
+*.iml
+/.idea
