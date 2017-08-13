@@ -2,6 +2,7 @@
 notes-node/notes-data.json
 
 node-web-server/node_modules/
+node-web-server/server.log
 weather-app/node_modules/
 notes-node/node_modules
 bundle.js
