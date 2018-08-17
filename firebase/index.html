@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAdp-i-9oWSrnOrlo968tDhlsaOtX8ls_g",
+        authDomain: "node-test-a0897.firebaseapp.com",
+        databaseURL: "https://node-test-a0897.firebaseio.com",
+        projectId: "node-test-a0897",
+        storageBucket: "node-test-a0897.appspot.com",
+        messagingSenderId: "1059110785286"
+      };
+      firebase.initializeApp(config);
+      // ref() 尋找資料庫路徑
+      //set()  新增資料
+      firebase.database().ref().set({student1: {id: 1, name: 'kiki'}, student2: {id: 2, name: 'Sam'}})
+      firebase.database().ref('student1/name').set('Gary')
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>
