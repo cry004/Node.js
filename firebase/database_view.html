@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+  </head>
+  <body>
+    <div class="content"></div>
     <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
     <script>
       // Initialize Firebase
@@ -15,13 +18,11 @@
         messagingSenderId: "1059110785286"
       };
       firebase.initializeApp(config);
-      // ref() 尋找資料庫路徑
-      //set()  新增資料
-      firebase.database().ref().set({student1: {id: 1, name: 'kiki'}, student2: {id: 2, name: 'Sam'}})
-      firebase.database().ref('student1/name').set('Gary')
-    </script>
-  </head>
-  <body>
 
+      var database = firebase.database().ref();
+      database.on('value', function(snapshot){
+        document.querySelector('.content').textContent = JSON.stringify(snapshot.val(),null,3);
+      })
+    </script>
   </body>
 </html>

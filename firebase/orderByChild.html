@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+  </head>
+  <body>
+    <button id="btn1">order by weight</button>
+    <button id="btn2">order by age</button>
+    <button id="btn3">order by height</button>
+    <ul id="list"></ul>
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAdp-i-9oWSrnOrlo968tDhlsaOtX8ls_g",
+        authDomain: "node-test-a0897.firebaseapp.com",
+        databaseURL: "https://node-test-a0897.firebaseio.com",
+        projectId: "node-test-a0897",
+        storageBucket: "node-test-a0897.appspot.com",
+        messagingSenderId: "1059110785286"
+      };
+      firebase.initializeApp(config);
+      var people = {
+        "Andy": {
+          "height": 170,
+          "age": 16,
+          "weight": 88
+        },
+        "Linda": {
+          "height": 164,
+          "age": 29,
+          "weight": 60
+        },
+        "Mike": {
+          "height": 150,
+          "age": 45,
+          "weight": 40
+        }
+      }
+      firebase.database().ref('people').set(people);
+      var btn1 = document.getElementById('btn1');
+      var btn2 = document.getElementById('btn2');
+      var btn3 = document.getElementById('btn3');
+
+      var list = document.getElementById('list');
+
+      var peopleRef = firebase.database().ref('people');
+      peopleRef.once('value', function(snapshot){
+        var str = ''
+        var data = snapshot.val()
+        for(var d in data) {
+          str += '<li>'+d+JSON.stringify(data[d])+'</li>'
+        }
+        list.innerHTML = str
+      })
+      btn1.addEventListener('click', function(){
+        peopleRef.orderByChild('weight').on('value', function(snapshot){
+          var str = ''
+          snapshot.forEach(function(item){
+            str += '<li>'+item.key+JSON.stringify(item.val())+'</li>'
+          })
+          list.innerHTML = str
+        })
+      })
+      btn2.addEventListener('click', function(){
+        peopleRef.orderByChild('age').on('value', function(snapshot){
+          var str = ''
+          snapshot.forEach(function(item){
+            str += '<li>'+item.key+JSON.stringify(item.val())+'</li>'
+          })
+          list.innerHTML = str
+        })
+      })
+      btn3.addEventListener('click', function(){
+        peopleRef.orderByChild('height').on('value', function(snapshot){
+          var str = ''
+          snapshot.forEach(function(item){
+            str += '<li>'+item.key+JSON.stringify(item.val())+'</li>'
+          })
+          list.innerHTML = str
+        })
+      })
+
+
+    </script>
+  </body>
+</html>
