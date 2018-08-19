@@ -1,45 +1,40 @@
 var express = require('express')
 var app = express()
+var engine = require('ejs-locals')
+var bodyParser = require('body-parser')
+var user = require('./routers/user') // user相關的路由集中在這檔案裡
 
-// 增加靜態檔案的路徑 public資料夾
+app.engine('ejs', engine)
+app.set('views', './views')
+app.set('view engine', 'ejs')
+
 app.use(express.static('public'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use('/usee', user)  // 使用user相關的路由
 
-var login = function (req, res, next) {
-  var _url = req.url
-  if (_url == '/') {
-    next()
-  } else {
-    res.send('你的登入資料有錯！')
-  }
-  console.log('log in')
-  // kk();  程式有問題時
-  // next()
-}
-// app.use(login);  //單獨使用 midddleware
-app.get('/', login, function (req, res) {
-  // middleware 放在中間
-  res.send('<h1>Home</h1><img src="/images/images.jpeg">') // image 放在 public 資料夾
+app.get('/', function (req, res) {
+  // res.send('<h1>Home</h1>');
+  res.render('index', {
+    title: 'Express test',
+    Author: '<h1>Mark</h1>',
+    show: false,
+    course: ['html', 'css', 'php']
+  })
 })
 
-app.use(function (req, res, next) {
-  res.status(404).send('抱歉，您的頁面不存在')
+app.get('/search', function (req, res) {
+  res.render('search')
 })
-
-app.use(function (err, req, res, next) {
-  console.error(err.stack)
-  res.status(500).send('程式有問題，請稍候嘗試')
+app.post('/searchList', function (req, res) {  // 傳統 submit表格 方法
+  console.log(req.body)
+  res.redirect('search')  // 重新導向
 })
-// app.get('/aaa/:name/', function (req, res) {
-//   var name = req.params.name
-//   var limit = req.query.limit
-//   var q = req.query.q
-//   console.log()
-//   res.send(
-//     '<h1>' + name + '想要找關鍵字叫做' + q + '的資料前' + limit + '筆</h1>'
-//   )
-// })
+app.post('/searchAJAX', function (req, res) { // ajax方法, spg用
+  console.log(req.body)
+  res.send('hello')
+  // res.redirect('search');
+})
 
 var port = process.env.PORT || 3000
-app.listen(port, function () {
-  console.log('OK!')
-})
+app.listen(port)

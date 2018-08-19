@@ -1,0 +1,11 @@
+<% layout('layout') %>
+  <%= title %>
+  <h1><%- Author %></h1>
+  <% if(show){ %>
+    You can see me if show
+  <% } %>
+  <ul>
+    <% for(var i = 0;course.length > i; i++){ %>
+    <li><%- course[i] %></li>
+  <%  }%>
+  </ul>
